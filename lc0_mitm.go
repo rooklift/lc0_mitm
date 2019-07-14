@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"net/http"
 	"os/exec"
@@ -49,7 +50,9 @@ func stdout_to_outgoing_ws(conn * websocket.Conn, stdout io.ReadCloser) {
 }
 
 func consume_stderr(stderr io.ReadCloser) {
-	// Note that we're not allowed concurrent writes to the conn.
+	// Note that we're not allowed concurrent writes to the conn. We'll print it to our Golang console instead.
 	scanner := bufio.NewScanner(stderr)
-	for scanner.Scan() {}
+	for scanner.Scan() {
+		fmt.Printf(scanner.Text())
+	}
 }
