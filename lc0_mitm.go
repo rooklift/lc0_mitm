@@ -30,6 +30,8 @@ func handler(writer http.ResponseWriter, request * http.Request) {
 	o_pipe, _ := exec_command.StdoutPipe()
 	e_pipe, _ := exec_command.StderrPipe()
 
+	exec_command.Start()
+
 	go incoming_ws_to_stdin(conn, i_pipe)
 	go stdout_to_outgoing_ws(conn, o_pipe)
 	go consume_stderr(e_pipe)
@@ -37,8 +39,12 @@ func handler(writer http.ResponseWriter, request * http.Request) {
 
 func incoming_ws_to_stdin(conn * websocket.Conn, stdin io.WriteCloser) {
 	for {
-		_, p, _ := conn.ReadMessage()
+		_, p, err := conn.ReadMessage()
+		if err != nil {
+			return			// FIXME: we should kill lc0
+		}
 		stdin.Write(p)
+		stdin.Write([]byte{'\n'})
 	}
 }
 
@@ -53,6 +59,6 @@ func consume_stderr(stderr io.ReadCloser) {
 	// Note that we're not allowed concurrent writes to the conn. We'll print it to our Golang console instead.
 	scanner := bufio.NewScanner(stderr)
 	for scanner.Scan() {
-		fmt.Printf(scanner.Text())
+		fmt.Printf(scanner.Text() + "\n")
 	}
 }
