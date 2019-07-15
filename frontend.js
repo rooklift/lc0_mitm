@@ -4386,7 +4386,7 @@ function NewRenderer() {
 				} else {
 					td.style["background-image"] = "url('" + images[piece_to_draw].src + "')";
 					td.style["background-size"] = "contain";
-					td.draggable = true;
+					td.draggable = false;						// FIXME? But changed for web version.
 				}
 			}
 		}
@@ -4808,7 +4808,7 @@ fenbox.addEventListener("keydown", (event) => {
 });
 
 // Setup drag-and-drop...
-
+/*
 window.addEventListener("dragenter", (event) => {		// Necessary to prevent brief flashes of "not allowed" icon.
 	event.preventDefault();
 });
@@ -4820,6 +4820,7 @@ window.addEventListener("dragover", (event) => {		// Necessary to prevent always
 window.addEventListener("drop", (event) => {
 	hub.handle_drop(event);
 });
+*/
 
 // Debug. Various functions set a key in the debug object when they start, and clear it when they return.
 // So if we ever find such a key with a non-false value, it means a function failed to return.
