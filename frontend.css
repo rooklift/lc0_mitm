@@ -1,0 +1,206 @@
+html {
+	height: 100%;
+}
+
+body {
+	background-color: #080808;
+	border: 0;
+	color: #eeeeee;
+	cursor: default;
+	height: calc(100% - 32px);
+	margin: 16px;
+	overflow: hidden;
+	padding: 0;
+}
+
+::-webkit-scrollbar {     
+	background-color: #181818;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #444444;
+}
+
+.flexible_column {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.flexible_row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.full_growth {
+	flex-grow: 100;			/* The actual number only matters if compared to other flex-grow havers */
+}
+
+#boardsquares {
+	border-collapse: collapse;
+	margin-bottom: 1em;
+	margin-right: 1em;
+	pointer-events: none;
+	table-layout: fixed;
+	user-select: none;
+	z-index: 1;
+}
+
+#canvas {
+	pointer-events: none;
+	position: fixed;
+	user-select: none;
+	z-index: 2;
+}
+
+#boardfriends {
+	border-collapse: collapse;
+	position: fixed;
+	table-layout: fixed;
+	user-select: none;
+	z-index: 3;
+}
+
+#promotiontable {
+	border-collapse: collapse;
+	display: none;
+	position: fixed;
+	table-layout: fixed;
+	user-select: none;
+	z-index: 4;
+}
+
+#fantasy {
+	display: none;
+	outline: 2px dashed #6cccee;
+	outline-offset: 6px;
+	position: fixed;
+	user-select: none;
+	z-index: 5;
+}
+
+#pgnchooser {
+	background-color: #080808;
+	display: none;						/* better than visibility: hidden - never intercepts inputs */
+	font-family: monospace, monospace;
+	font-size: 100%;
+	height: 100%;
+	left: 0;
+	overflow-y: auto;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 6;
+}
+
+td {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#statusbox {
+	border: none;
+	display: block;
+	font-family: monospace, monospace;
+	margin-bottom: 1em;
+	user-select: none;
+	width: 100%;
+}
+
+#fenbox {
+	background-color: #080808;
+	border: none;
+	caret-color: white;
+	color: #6cccee;
+	display: block;
+	float: bottom;
+	font-family: monospace, monospace;
+	font-size: 100%;
+	width: 100%;
+}
+
+input[type=text]:focus {
+	outline: 2px dashed gray;
+	outline-offset: 4px;
+}
+
+#infobox {
+	color: #cccccc;						/* only used for Lc0 stderr output at startup */
+	font-family: monospace, monospace;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding-right: 10px;				/* so the text doesn't get so near the scroll bar */
+	user-select: none;
+	white-space: pre-wrap;
+}
+
+#movelist {
+	font-family: monospace, monospace;
+	margin-top: 1em;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding-right: 10px;				/* so the text doesn't get so near the scroll bar */
+	user-select: none;
+	white-space: pre-wrap;
+}
+
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+ul {
+	list-style: none;
+}
+
+span.pink {
+	color: #ffaaaa;
+}
+
+span.white {
+	color: #eeeeee;
+}
+
+span.gray {
+	color: #999999;
+}
+
+span.red {
+	color: #dd7766;
+}
+
+span.yellow {
+	color: #ffff00;
+}
+
+span.blue {
+	color: #6cccee;
+}
+
+.infoline {
+	margin-bottom: 1em;
+}
+
+.ocm_highlight {
+	background-color: #770000;
+}
+
+.hover_highlight {
+	background-color: #222244;
+}
+
+span.movelist_highlight_blue {
+	background-color: #222244;
+	color: #6cccee;
+}
+
+span.movelist_highlight_yellow {
+	background-color: #444422;
+	color: #ffff00;
+}
+
+span.nobr {
+	white-space: nowrap;				/* Used for O-O and O-O-O moves */
+}

@@ -2,27 +2,48 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Test</title>
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src ws://127.0.0.1:8080;">
+	<!-- https://content-security-policy.com/ -->
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src ws://127.0.0.1:8080; style-src 'self' 'unsafe-inline' data:; img-src 'self' data:">
+	<title>Lc0</title>
+	<link rel="stylesheet" type="text/css" href="frontend.css">
 </head>
+
 <body>
 
-<p id="p"></p>
+	<!-- note to self, only use id for things the JS needs to see, they pollute the namespace -->
 
-<script>
-"use strict";
+	<div class="flexible_column">
 
-let websocket = new WebSocket("ws://127.0.0.1:8080");
+		<div class="flexible_row">
 
-websocket.addEventListener("message", (event) => {
-	p.innerHTML += event.data + "<br>";
-});
+			<div>											<!-- the JS sets the tables and canvas to be on top of each other -->
+				<table id="boardsquares"></table>
+				<canvas id="canvas"></canvas>
+				<table id="boardfriends"></table>
+				<canvas id="fantasy"></canvas>
+			</div>
 
-websocket.addEventListener("open", (event) => {
-	websocket.send("uci"); 
-});
+			<div class="full_growth">
+				<div id="statusbox">Starting up...</div>	<!-- needs to have some content so it has a height when we calculate sizes -->
+				<div id="infobox"></div>
+			</div>
 
-</script>
+		</div>
+
+		<input type="text" id="fenbox" value="">
+
+		<div id="movelist" class="full_growth"></div>
+
+	</div>
+
+	<!-- Special hidden items that show up when needed -->
+
+	<div id="pgnchooser"></div>
+	<table id="promotiontable"></table>
+
+	<!-- le JS -->
+
+	<script src="frontend.js"></script>
 
 </body>
 </html>
