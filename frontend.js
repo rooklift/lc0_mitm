@@ -83,7 +83,7 @@ let config = {
 };
 
 config.flip = false;
-config.versus = "";
+config.versus = "wb";
 config.square_size = Math.floor(config.board_size / 8);
 config.board_size = config.square_size * 8;
 
