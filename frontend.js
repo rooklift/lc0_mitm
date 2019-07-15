@@ -19,7 +19,7 @@ const statusbox = document.getElementById("statusbox");
 // Globals..........................................................
 
 const context = canvas.getContext("2d");
-const decoder = new TextDecoder("utf8");
+const decoder = null;						// new TextDecoder("utf8");
 
 let tree_version = 0;
 
