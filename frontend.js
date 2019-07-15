@@ -295,11 +295,13 @@ function EventPathString(event, prefix) {
 	// Given an event with event.path like ["foo", "bar", "searchmove_e2e4", "whatever"]
 	// return the string "e2e4", assuming the prefix matches. Else return null.
 
-	if (!event || typeof prefix !== "string" || Array.isArray(event.path) === false) {
+	let path = event.path || (event.composedPath && event.composedPath());
+
+	if (!event || typeof prefix !== "string" || Array.isArray(path) === false) {
 		return null;
 	}
 
-	for (let item of event.path) {
+	for (let item of path) {
 		if (typeof item.id === "string") {
 			if (item.id.startsWith(prefix)) {
 				return item.id.slice(prefix.length);
@@ -4128,13 +4130,7 @@ function NewRenderer() {
 
 	renderer.boardfriends_click = function(event) {
 
-		let s = event.target.id;
-
-		if (typeof s !== "string" || s.startsWith("overlay_") === false) {
-			return;
-		}
-
-		s = s.slice("overlay_".length);
+		let s = EventPathString(event, "overlay_");
 		let p = Point(s);
 		
 		if (p === Point(null)) {
@@ -4297,7 +4293,7 @@ function NewRenderer() {
 	renderer.hide_promotiontable = function() {
 		promotiontable.style.display = "none";
 	};
-
+/*
 	renderer.handle_drop = function(event) {
 
 		// Note to self - examining the event in the console can be misleading
@@ -4337,7 +4333,7 @@ function NewRenderer() {
 			return;
 		}
 	};
-
+*/
 	renderer.mouse_point = function() {
 		let overlist = document.querySelectorAll(":hover");
 		for (let item of overlist) {
@@ -4786,8 +4782,10 @@ document.addEventListener("wheel", (event) => {
 
 	let allow = false;
 
-	if (event.path) {
-		for (let item of event.path) {
+	let path = event.path || (event.composedPath && event.composedPath());
+
+	if (path) {
+		for (let item of path) {
 			if (item.id === "boardfriends") {
 				allow = true;
 				break;
