@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/websocket"      // go get github.com/gorilla/websocket
 )
 
-var Upgrader = websocket.Upgrader{ReadBufferSize: 1024, WriteBufferSize: 1024, CheckOrigin: func(r *http.Request) bool {return true}}
+var Upgrader = websocket.Upgrader{CheckOrigin: func(r *http.Request) bool {return true}}
 
 func main() {
 	http.HandleFunc("/", handler)
