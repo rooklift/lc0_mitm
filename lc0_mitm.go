@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"os/exec"
 
 	"github.com/gorilla/websocket"      // go get github.com/gorilla/websocket
@@ -26,7 +27,16 @@ func handler(writer http.ResponseWriter, request * http.Request) {
 		return
 	}
 
-	lc0 := exec.Command("./lc0.exe")
+	var lc0 * exec.Cmd
+
+	if _, err := os.Stat("./lc0.exe"); err == nil {
+		lc0 = exec.Command("./lc0.exe")
+	} else if _, err := os.Stat("./lc0"); err == nil {
+		lc0 = exec.Command("./lc0")
+	} else {
+		fmt.Printf("Could not find lc0.exe or lc0\n")
+		return
+	}
 
 	i_pipe, _ := lc0.StdinPipe()
 	o_pipe, _ := lc0.StdoutPipe()
