@@ -19,6 +19,8 @@ func main() {
 
 func handler(writer http.ResponseWriter, request * http.Request) {
 
+	fmt.Printf("Incoming connection...\n")
+
 	conn, err := Upgrader.Upgrade(writer, request, nil)
 	if err != nil {
 		return
@@ -41,7 +43,7 @@ func incoming_ws_to_stdin(conn * websocket.Conn, stdin io.WriteCloser, lc0 * exe
 	for {
 		_, p, err := conn.ReadMessage()
 		if err != nil {
-			fmt.Printf("WS connection closed, killing lc0\n")
+			fmt.Printf("Connection closed, killing lc0.\n")
 			lc0.Process.Kill()
 			return
 		}
