@@ -24,24 +24,26 @@ func handler(writer http.ResponseWriter, request * http.Request) {
 		return
 	}
 
-	exec_command := exec.Command("./lc0.exe")
+	lc0 := exec.Command("./lc0.exe")
 
-	i_pipe, _ := exec_command.StdinPipe()
-	o_pipe, _ := exec_command.StdoutPipe()
-	e_pipe, _ := exec_command.StderrPipe()
+	i_pipe, _ := lc0.StdinPipe()
+	o_pipe, _ := lc0.StdoutPipe()
+	e_pipe, _ := lc0.StderrPipe()
 
-	exec_command.Start()
+	lc0.Start()
 
-	go incoming_ws_to_stdin(conn, i_pipe)
+	go incoming_ws_to_stdin(conn, i_pipe, lc0)
 	go stdout_to_outgoing_ws(conn, o_pipe)
 	go consume_stderr(e_pipe)
 }
 
-func incoming_ws_to_stdin(conn * websocket.Conn, stdin io.WriteCloser) {
+func incoming_ws_to_stdin(conn * websocket.Conn, stdin io.WriteCloser, lc0 * exec.Cmd) {
 	for {
 		_, p, err := conn.ReadMessage()
 		if err != nil {
-			return			// FIXME: we should kill lc0
+			fmt.Printf("WS connection closed, killing lc0\n")
+			lc0.Process.Kill()
+			return
 		}
 		stdin.Write(p)
 		stdin.Write([]byte{'\n'})
@@ -56,9 +58,9 @@ func stdout_to_outgoing_ws(conn * websocket.Conn, stdout io.ReadCloser) {
 }
 
 func consume_stderr(stderr io.ReadCloser) {
-	// Note that we're not allowed concurrent writes to the conn. We'll print it to our Golang console instead.
+	// Note that we're not allowed concurrent writes to the conn.
 	scanner := bufio.NewScanner(stderr)
 	for scanner.Scan() {
-		fmt.Printf(scanner.Text() + "\n")
+		// fmt.Printf(scanner.Text() + "\n")
 	}
 }
