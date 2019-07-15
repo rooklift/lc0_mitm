@@ -4293,7 +4293,7 @@ function NewRenderer() {
 	renderer.hide_promotiontable = function() {
 		promotiontable.style.display = "none";
 	};
-/*
+
 	renderer.handle_drop = function(event) {
 
 		// Note to self - examining the event in the console can be misleading
@@ -4303,14 +4303,14 @@ function NewRenderer() {
 		// Just about any drop should clear the active square...
 
 		this.set_active_square(null);
-
+/*
 		// Is it a file?
 
 		if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0] && event.dataTransfer.files[0].path) {
 			this.open(event.dataTransfer.files[0].path);
 			return;
 		}
-
+*/
 		// Is it a piece?
 
 		let text_data = event.dataTransfer.getData("text");
@@ -4319,10 +4319,14 @@ function NewRenderer() {
 			let source = Point(text_data.slice(8, 10));
 			let dest = Point(null);
 
-			for (let item of event.path) {
-				if (typeof item.id === "string" && item.id.startsWith("overlay_")) {
-					dest = Point(item.id.slice(8, 10));
-					break;
+			let path = event.path || (event.composedPath && event.composedPath());
+
+			if (path) {
+				for (let item of path) {
+					if (typeof item.id === "string" && item.id.startsWith("overlay_")) {
+						dest = Point(item.id.slice(8, 10));
+						break;
+					}
 				}
 			}
 
@@ -4333,7 +4337,7 @@ function NewRenderer() {
 			return;
 		}
 	};
-*/
+
 	renderer.mouse_point = function() {
 		let overlist = document.querySelectorAll(":hover");
 		for (let item of overlist) {
@@ -4382,7 +4386,7 @@ function NewRenderer() {
 				} else {
 					td.style["background-image"] = "url('" + images[piece_to_draw].src + "')";
 					td.style["background-size"] = "contain";
-					td.draggable = false;						// FIXME? But changed for web version.
+					td.draggable = true;
 				}
 			}
 		}
@@ -4808,7 +4812,7 @@ fenbox.addEventListener("keydown", (event) => {
 });
 
 // Setup drag-and-drop...
-/*
+
 window.addEventListener("dragenter", (event) => {		// Necessary to prevent brief flashes of "not allowed" icon.
 	event.preventDefault();
 });
@@ -4818,9 +4822,10 @@ window.addEventListener("dragover", (event) => {		// Necessary to prevent always
 });
 
 window.addEventListener("drop", (event) => {
+	event.preventDefault();
 	hub.handle_drop(event);
 });
-*/
+
 
 // Debug. Various functions set a key in the debug object when they start, and clear it when they return.
 // So if we ever find such a key with a non-false value, it means a function failed to return.
