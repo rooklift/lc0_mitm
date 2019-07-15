@@ -83,7 +83,7 @@ let config = {
 };
 
 config.flip = false;
-config.versus = "wb";
+config.versus = "";
 config.square_size = Math.floor(config.board_size / 8);
 config.board_size = config.square_size * 8;
 
@@ -4630,6 +4630,8 @@ function NewRenderer() {
 		renderer.engine.setoption("SmartPruningFactor", 0);
 		renderer.engine.setoption("ScoreType", "centipawn");			// The default, but the user can't be allowed to override this.
 		renderer.engine.send("ucinewgame");
+
+		renderer.set_versus("wb");
 
 	}, {once: true});
 
