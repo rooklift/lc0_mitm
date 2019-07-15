@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Test</title>
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src ws://127.0.0.1:8080;">
+</head>
+<body>
+
+<p id="p"></p>
+
+<script>
+"use strict";
+
+let websocket = new WebSocket("ws://127.0.0.1:8080");
+
+websocket.addEventListener("message", (event) => {
+	p.innerHTML += event.data + "<br>";
+});
+
+websocket.addEventListener("open", (event) => {
+	websocket.send("uci"); 
+});
+
+</script>
+
+</body>
+</html>
