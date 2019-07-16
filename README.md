@@ -7,6 +7,6 @@ go get github.com/gorilla/websocket
 go build lc0_mitm.go
 ```
 
-Then run the Go backend in the same file as `lc0.exe`, and launch the HTML file in a browser. Tested on Firefox only, for now. In the event that you're on Linux, you probably have `lc0` instead of `lc0.exe` so you can either rename it or change that bit of code in the .go file.
+Then run the Go backend in the same folder as `lc0.exe` or `lc0`, and launch the HTML file in a browser. If needed, you should configure Leela with an `lc0.config` file.
 
-A bunch of non-functional or broken code lurks in the JS (i.e. it works in Nibbler but won't work here).
+Tested on Firefox only, for now. A bunch of non-functional or broken code lurks in the JS (i.e. it works in Nibbler but won't work here).
