@@ -9,7 +9,9 @@ go build lc0_mitm.go
 
 Then run the Go backend in the same folder as `lc0.exe` or `lc0`, and launch the HTML file in a browser. If needed, you should configure Leela with an `lc0.config` file.
 
-Tested on Firefox only, for now. A bunch of non-functional or broken code lurks in the JS (i.e. it works in Nibbler but won't work here).
+Tested on Firefox only, for now. Edge is known not to work. I refuse to install Google software, so someone else will have to try Chrome.
+
+A bunch of non-functional or broken code lurks in the JS (i.e. it works in Nibbler but won't work here).
 
 # Security
 
