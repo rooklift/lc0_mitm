@@ -2776,7 +2776,9 @@ function NewInfoHandler() {
 			let status_string = "";
 
 			if (leela_maybe_running === false) {
-				status_string += `<span class="yellow">${config.versus === "" ? "HALTED " : "YOUR MOVE "}</span>`;
+				status_string += `<span class="yellow">HALTED - CLICK TO RUN </span>`;
+			} else {
+				status_string += `<span class="green">RUNNING - CLICK TO STOP </span>`;
 			}
 
 			status_string += `<span class="gray">Nodes: ${NString(this.nodes)}, N/s: ${NString(this.nps)}, Time: ${DurationString(this.time)}</span>`;
@@ -4774,6 +4776,14 @@ infobox.addEventListener("mousedown", (event) => {
 
 movelist.addEventListener("mousedown", (event) => {
 	hub.movelist_click(event);
+});
+
+statusbox.addEventListener("mousedown", (event) => {
+	if (config.versus === "") {
+		hub.set_versus("wb");
+	} else {
+		hub.set_versus("");
+	}
 });
 
 document.addEventListener("wheel", (event) => {
