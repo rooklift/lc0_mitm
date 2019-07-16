@@ -15,4 +15,4 @@ A bunch of non-functional or broken code lurks in the JS (i.e. it works in Nibbl
 
 # Security
 
-I wouldn't run this on a public-facing server, as the design allows the browser to send any command over UCI to the engine.
+I wouldn't run this on a public-facing server, if I were you, as the design allows the browser to send any command over UCI to the engine.
