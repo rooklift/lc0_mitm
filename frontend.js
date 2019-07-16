@@ -417,7 +417,6 @@ function DurationString(ms) {
 	return `${seconds}s`;
 }
 
-
 // The point of most of this is to make each Point represented by a single object so that
 // naive equality checking works, i.e. Point(x, y) === Point(x, y) should be true. Since
 // object comparisons in JS will be false unless they are the same object, we do all this...
@@ -464,7 +463,6 @@ function Point(a, b) {
 // Note: I rather regret now the existence of Point(null) - it means there's two
 // different ways for a variable that usually holds a Point to be null - either
 // having the actual null (or undefined) value, or the Point(null) value. Alas.
-
 
 // All our positions have a prototype which contains the methods needed. This is much faster than
 // creating each position with methods embedded in itself. Downside is, we have to use the "this"
@@ -1462,7 +1460,6 @@ function NewPosition(state = null, active = "w", castling = "", enpassant = null
 	return p;
 }
 
-
 function LoadFEN(fen) {
 
 	let ret = NewPosition();
@@ -1585,7 +1582,6 @@ function LoadFEN(fen) {
 
 	return ret;
 }
-
 
 // EVERYTHING that changes the tree structure must increment the global counter  tree_version
 // Currently this means:
@@ -1840,7 +1836,6 @@ function __destroy_tree(node) {
 	node.children = null;
 	return;
 }
-
 
 function split_buffer(buf) {
 
@@ -2245,7 +2240,6 @@ function write_tree(node, connector, skip_self_flag, force_number_string) {
 	write_tree(main_child, connector, true, false);
 }
 
-
 // In an ideal world, the inherent tree structure in the Chess record and the
 // inherent tree structure in the DOM would relate to each other in such a way
 // that inserting a new move, or highlighting a new node, etc, would have an
@@ -2476,7 +2470,6 @@ function NewMovelistHander() {
 	
 	return handler;
 }
-
 
 function NewInfoHandler() {
 
@@ -3318,7 +3311,6 @@ function new_info(board, move) {
 	info.version = 0;
 	return info;
 }
-
 
 function NewEngine() {
 
@@ -4835,7 +4827,6 @@ window.addEventListener("drop", (event) => {
 	event.preventDefault();
 	hub.handle_drop(event);
 });
-
 
 // Debug. Various functions set a key in the debug object when they start, and clear it when they return.
 // So if we ever find such a key with a non-false value, it means a function failed to return.
