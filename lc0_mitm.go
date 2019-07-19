@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"net/http"
@@ -44,6 +45,14 @@ func handler(writer http.ResponseWriter, request * http.Request) {
 
 	lc0.Start()
 
+	i_pipe.Write([]byte("uci\n"))
+	i_pipe.Write([]byte("setoption name VerboseMoveStats value true\n"))
+	i_pipe.Write([]byte("setoption name LogLiveStats value true\n"))
+	i_pipe.Write([]byte("setoption name MultiPV value 500\n"))
+	i_pipe.Write([]byte("setoption name SmartPruningFactor value 0\n"))
+	i_pipe.Write([]byte("setoption name ScoreType value centipawn\n"))
+	i_pipe.Write([]byte("ucinewgame\n"))
+
 	go incoming_ws_to_stdin(conn, i_pipe, lc0)
 	go stdout_to_outgoing_ws(conn, o_pipe)
 	go consume_stderr(e_pipe)
@@ -51,13 +60,18 @@ func handler(writer http.ResponseWriter, request * http.Request) {
 
 func incoming_ws_to_stdin(conn * websocket.Conn, stdin io.WriteCloser, lc0 * exec.Cmd) {
 	for {
-		_, p, err := conn.ReadMessage()
+		_, b, err := conn.ReadMessage()
 		if err != nil {
 			fmt.Printf("Connection closed, killing lc0.\n")
 			lc0.Process.Kill()
 			return
 		}
-		stdin.Write(p)
+
+		if bytes.Contains(b, []byte("setoption")) {		// Disallow setoption from frontend
+			continue
+		}
+
+		stdin.Write(b)
 		stdin.Write([]byte{'\n'})
 	}
 }

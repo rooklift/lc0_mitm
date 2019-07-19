@@ -4604,32 +4604,12 @@ function NewRenderer() {
 
 	// --------------------------------------------------------------------------------------------
 	// The call to setup needs to happen after renderer.receive and .err_receive actually exist...
-	// One could argue that this stuff shouldn't be in NewRenderer() at all.
 
 	renderer.engine.setup(renderer.receive.bind(renderer), renderer.err_receive.bind(renderer));
 
 	renderer.engine.websocket.addEventListener("open", (event) => {
-
-		renderer.engine.send("uci");
-		for (let key of Object.keys(config.options)) {
-			renderer.engine.setoption(key, config.options[key]);
-		}
-		renderer.engine.setoption("VerboseMoveStats", true);			// Required for LogLiveStats to work.
-		renderer.engine.setoption("LogLiveStats", true);				// "Secret" Lc0 command.
-
-		// Give me all the variations. Wait. Wait! I'm worried that what you heard was "give me
-		// a lot of variations". To clarify - give me all the variations!
-
-		renderer.engine.setoption("MultiPV", 500);
-		renderer.engine.setoption("SmartPruningFactor", 0);
-		renderer.engine.setoption("ScoreType", "centipawn");			// The default, but the user can't be allowed to override this.
-		renderer.engine.send("ucinewgame");
-
 		renderer.set_versus("wb");
-
 	}, {once: true});
-
-	// Another thing that needs to happen somewhere...
 
 	fenbox.value = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
