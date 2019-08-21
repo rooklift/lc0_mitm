@@ -16,3 +16,7 @@ A bunch of non-functional or broken code lurks in the JS (i.e. it works in Nibbl
 # Security
 
 I wouldn't run this on a public-facing server, if I were you, as the design allows the browser to send any command over UCI to the engine.
+
+# Note to self
+
+Since this was made, the main Nibbler has better sync code, which should be incorporated here if this is ever serious.
